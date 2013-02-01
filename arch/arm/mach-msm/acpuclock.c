@@ -210,6 +210,22 @@ static struct clkctl_acpu_speed pll0_960_pll1_245_pll2_1200[] = {
 	{ 0, 400000, ACPU_PLL_2, 2, 2, 133333, 2, 5, 122880 },
 	{ 1, 480000, ACPU_PLL_0, 4, 1, 160000, 2, 6, 122880 },
 	{ 1, 600000, ACPU_PLL_2, 2, 1, 200000, 2, 7, 122880 },
+#ifdef CONFIG_MSM7X27_OVERCLOCK
+	{ 1, 729600, ACPU_PLL_0, 4, 0, 182400, 3, 7, 122880 },
+	{ 1, 744000, ACPU_PLL_0, 4, 0, 186000, 3, 7, 122880 },
+	{ 1, 768000, ACPU_PLL_0, 4, 0, 192000, 3, 7, 122880 },
+	{ 1, 787200, ACPU_PLL_0, 4, 0, 196800, 3, 7, 122880 },
+#ifdef CONFIG_MSM7X27_BACONMAKER
+	{ 1, 806400, ACPU_PLL_0, 4, 0, 201600, 3, 7, 122880 },
+	{ 1, 825600, ACPU_PLL_0, 4, 0, 206400, 3, 7, 122880 },
+	{ 1, 844800, ACPU_PLL_0, 4, 0, 211200, 3, 7, 122880 },
+	{ 1, 852000, ACPU_PLL_0, 4, 0, 213000, 3, 7, 122880 },
+	{ 1, 864000, ACPU_PLL_0, 4, 0, 216000, 3, 7, 122880 },
+	{ 1, 880000, ACPU_PLL_0, 4, 0, 220000, 3, 7, 122880 },
+	{ 1, 892000, ACPU_PLL_0, 4, 0, 223000, 3, 7, 122880 },
+	{ 1, 900000, ACPU_PLL_0, 4, 0, 225000, 3, 7, 122880 },
+#endif
+#endif
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0}, {0, 0, 0} }
 };
 
@@ -291,7 +307,7 @@ static struct pll_freq_tbl_map acpu_freq_tbl_list[] = {
 };
 
 #ifdef CONFIG_CPU_FREQ_MSM
-static struct cpufreq_frequency_table freq_table[20];
+static struct cpufreq_frequency_table freq_table[50];
 
 static void __init cpufreq_table_init(void)
 {
@@ -424,11 +440,23 @@ static int acpuclk_set_vdd_level(int vdd)
 static void acpuclk_set_div(const struct clkctl_acpu_speed *hunt_s)
 {
 	uint32_t reg_clkctl, reg_clksel, clk_div, src_sel;
+#ifdef CONFIG_MSM7X27_OVERCLOCK
+	uint32_t a11_div;
+#endif
 
 	reg_clksel = readl(A11S_CLK_SEL_ADDR);
 
 	/* AHB_CLK_DIV */
 	clk_div = (reg_clksel >> 1) & 0x03;
+#ifdef CONFIG_MSM7X27_OVERCLOCK
+	a11_div = hunt_s->a11clk_src_div;
+
+	if(hunt_s->a11clk_khz>600000) {
+					a11_div=0;
+					writel(hunt_s->a11clk_khz/19200, PLLn_L_VAL(0));
+					udelay(50);
+			}
+#endif
 	/* CLK_SEL_SRC1NO */
 	src_sel = reg_clksel & 1;
 
@@ -446,7 +474,11 @@ static void acpuclk_set_div(const struct clkctl_acpu_speed *hunt_s)
 	reg_clkctl = readl(A11S_CLK_CNTL_ADDR);
 	reg_clkctl &= ~(0xFF << (8 * src_sel));
 	reg_clkctl |= hunt_s->a11clk_src_sel << (4 + 8 * src_sel);
+#ifdef CONFIG_MSM7X27_OVERCLOCK
+	reg_clkctl |= a11_div << (0 + 8 * src_sel);
+#else
 	reg_clkctl |= hunt_s->a11clk_src_div << (0 + 8 * src_sel);
+#endif
 	writel(reg_clkctl, A11S_CLK_CNTL_ADDR);
 
 	/* Program clock source selection */
