@@ -319,7 +319,7 @@ int suspend_sys_sync_wait(void)
 	return 0;
 }
 
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 extern struct timespec jrd_b_ts;
 extern bool jrd_start_pwd_record;
 extern signed long long jrd_total_sleep_time;
@@ -347,7 +347,7 @@ static void suspend(struct work_struct *work)
 		getnstimeofday(&ts);
 		rtc_time_to_tm(ts.tv_sec, &tm);
 
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
                 if (jrd_start_pwd_record == true)
                 {
                     if (ts.tv_sec > jrd_b_ts.tv_sec)

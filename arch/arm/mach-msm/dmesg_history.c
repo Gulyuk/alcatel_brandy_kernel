@@ -71,7 +71,7 @@
 
 static char *dmesg_history;
 static char *fatal_history;
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 static char *tcxo_shutdown_record;
 static char *uptime_voltage_record;
 #endif
@@ -119,7 +119,7 @@ static int dump_fatal_history(char *buf, char **start, off_t offset,
 	return len;
 }
 
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 static int jrd_get_modem_sleeptime(char *buf, char **start, off_t offset,
 		int count, int *eof, void *data)
 {
@@ -255,7 +255,7 @@ int __init dmesg_history_init(void)
 {
 	struct proc_dir_entry *linux_crash_entry;
 	struct proc_dir_entry *modem_crash_entry;
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 	struct proc_dir_entry *modem_sleeptime_entry;
 	struct proc_dir_entry *uptime_voltage_entry;
 
@@ -283,7 +283,7 @@ int __init dmesg_history_init(void)
 	if (modem_crash_entry)
 		modem_crash_entry->read_proc = &dump_fatal_history;
 
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 	tcxo_shutdown_record = smem_alloc(SMEM_RECORD_MODEM_SLEEP_TIME, SLEEP_DATA_MIN_SIZE);
 	modem_sleeptime_entry = create_proc_entry("modem_sleeptime", 0666, NULL);
 	if(modem_sleeptime_entry){

@@ -968,7 +968,7 @@ static int msm_pm_modem_busy(void)
  *      -ETIMEDOUT: timed out waiting for modem's handshake -- no power loss
  *      0: success
  */
- #if JRD_RECORD_SLEEP_UP_TIME
+ #ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 signed long long jrd_total_sleep_time = 0;
  #endif
 static int msm_pm_power_collapse
@@ -1377,7 +1377,7 @@ static int msm_pm_swfi(bool ramp_acpu)
 /******************************************************************************
  * External Idle/Suspend Functions
  *****************************************************************************/
- #if JRD_RECORD_SLEEP_UP_TIME
+ #ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 signed long long jrd_b_time = 0, jrd_a_time = 0;
 extern bool jrd_start_pwd_record;
 
@@ -1405,7 +1405,7 @@ void arch_idle(void)
 	int exit_stat;
 #endif /* CONFIG_MSM_IDLE_STATS */
 
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
         struct timespec a_ts;//,b_ts;
 	struct rtc_time a_tm;
 #endif
@@ -1529,7 +1529,7 @@ void arch_idle(void)
 		sleep_limit |= SLEEP_RESOURCE_MEMORY_BIT0;
 #endif
 
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
                 if (jrd_start_pwd_record == true)
                 {
 

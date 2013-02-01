@@ -120,7 +120,7 @@ int msm_fb_debugfs_file_index;
 struct dentry *msm_fb_debugfs_root;
 struct dentry *msm_fb_debugfs_file[MSM_FB_MAX_DBGFS];
 
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 
 static unsigned int jrd_lcd_sum= 0;
 static struct timer_list jrd_lcd_timer;
@@ -494,7 +494,7 @@ static int msm_fb_probe(struct platform_device *pdev)
 	pdev_list[pdev_list_cnt++] = pdev;
 	msm_fb_create_sysfs(pdev);
 
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 	init_timer(&jrd_lcd_timer);
 
 	jrd_lcd_timer.data = 0;
@@ -782,7 +782,7 @@ void msm_fb_set_backlight(struct msm_fb_data_type *mfd, __u32 bkl_lvl)
 {
 	struct msm_fb_panel_data *pdata;
 
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 	static struct timespec start;
 	static struct timespec end;
 	static int call_once=0;

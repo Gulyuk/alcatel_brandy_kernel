@@ -339,7 +339,7 @@ void kernel_halt(void)
 }
 
 EXPORT_SYMBOL_GPL(kernel_halt);
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 extern bool jrd_start_pwd_record;
 extern signed long long jrd_total_sleep_time;
 extern void sleep_time_fs_write(signed long long sleep_time, bool be_erased);
@@ -352,7 +352,7 @@ extern void jrd_lcd_write_fs_time(void);
  */
 void kernel_power_off(void)
 {
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
         if (jrd_start_pwd_record == true)
         {
 	   jrd_lcd_write_fs_time();

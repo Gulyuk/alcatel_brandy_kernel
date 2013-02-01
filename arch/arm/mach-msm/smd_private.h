@@ -253,7 +253,7 @@ enum {
 	SMEM_ERR_CRASH_LOG,
 //{add for save dmesg log to EFS, xuxian 20110217
 	SMEM_ERR_DMESG_LOG,
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 	SMEM_RECORD_MODEM_SLEEP_TIME,	/*get tcxo shutdown time from modem efs*/
 	SMEM_RECORD_UPTIME_VOLTAGE,	/*get uptime&voltage from modem efs*/
 #endif

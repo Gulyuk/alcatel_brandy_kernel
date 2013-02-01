@@ -37,9 +37,11 @@
 #define FEATUE_JRD_BATTERY_CAPACITY
 
 //jrd add for power off charge
+/*
 #ifndef TARGET_BUILD_MMITEST
 #define FEATURE_POWER_OFF_CHARGER_JRD
 #endif
+*/
 
 struct msm_psy_batt_pdata {
 	u32 voltage_max_design;

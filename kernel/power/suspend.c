@@ -202,7 +202,7 @@ int suspend_devices_and_enter(suspend_state_t state)
 {
 	int error;
 	gfp_t saved_mask;
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
         struct timespec a_ts;
 	struct rtc_time a_tm;
 #endif
@@ -216,7 +216,7 @@ int suspend_devices_and_enter(suspend_state_t state)
 			goto Close;
 	}
 
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
        getnstimeofday(&a_ts);
 
        rtc_time_to_tm(a_ts.tv_sec, &a_tm);

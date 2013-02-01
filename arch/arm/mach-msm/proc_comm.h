@@ -16,8 +16,6 @@
 #ifndef _ARCH_ARM_MACH_MSM_MSM_PROC_COMM_H_
 #define _ARCH_ARM_MACH_MSM_MSM_PROC_COMM_H_
 
-#define JRD_RECORD_SLEEP_UP_TIME			1
-
 enum {
 	PCOM_CMD_IDLE = 0x0,
 	PCOM_CMD_DONE,
@@ -150,7 +148,7 @@ enum {
 //{add proc comm to save dmesg log to EFS
 	SMEM_PROC_COMM_SAVE_DMESG_HISTORY,
 //}
-#if JRD_RECORD_SLEEP_UP_TIME
+#ifdef CONFIG_JRD_RECORD_SLEEP_UP_TIME
 	SMEM_PROC_COMM_FOR_RECORD_SLEEPTIME,	/*add for send cmd to modem for start/stop recording modem sleeptime and uptime&voltage*/
 #endif
 	PCOM_OEM_LAST = SMEM_PROC_COMM_SAVE_DMESG_HISTORY,

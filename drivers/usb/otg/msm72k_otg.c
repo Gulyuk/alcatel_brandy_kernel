@@ -43,6 +43,7 @@
 static void otg_reset(struct otg_transceiver *xceiv, int phy_reset);
 static void msm_otg_set_vbus_state(int online);
 static void msm_otg_set_id_state(int online);
+#ifdef CONFIG_FEATURE_POWER_OFF_CHARGER_JRD
 extern int jrd_get_usb_connect(void);
 
 /* work function */
@@ -55,6 +56,7 @@ static void jrd_vbus_work(struct work_struct *work)
 {
     jrd_get_usb_connect();
 }
+#endif
 
 struct msm_otg *the_msm_otg;
 
@@ -1185,10 +1187,14 @@ static irqreturn_t msm_otg_irq(int irq, void *data)
 		 */
 		if ((state >= OTG_STATE_A_IDLE) &&
 			!test_bit(ID_A, &dev->inputs))
+#ifdef CONFIG_FEATURE_POWER_OFF_CHARGER_JRD
                 {
                         schedule_delayed_work(&jrd_vbus_workqueue, 0);
+#endif
 			goto out;
+#ifdef CONFIG_FEATURE_POWER_OFF_CHARGER_JRD
                 }
+#endif
 		if (otgsc & OTGSC_BSV) {
 			pr_debug("BSV set\n");
 			set_bit(B_SESS_VLD, &dev->inputs);
@@ -1197,7 +1203,9 @@ static irqreturn_t msm_otg_irq(int irq, void *data)
 			clear_bit(B_SESS_VLD, &dev->inputs);
 		}
 		work = 1;
+#ifdef CONFIG_FEATURE_POWER_OFF_CHARGER_JRD
                 schedule_delayed_work(&jrd_vbus_workqueue, 0);
+#endif
 	} else if (otgsc & OTGSC_DPIS) {
 		pr_debug("DPIS detected\n");
 		writel(otgsc, USB_OTGSC);

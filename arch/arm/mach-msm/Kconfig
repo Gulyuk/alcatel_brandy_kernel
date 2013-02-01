@@ -1335,4 +1335,15 @@ config MSM_SCHED_FAST_CPU_ONLINE
 	  Bypass scheduler domain reconstruction when onlining the second
 	  CPU on 8X60 to speed up operation.
 
+config FEATURE_POWER_OFF_CHARGER_JRD
+		bool "Offline mode for charger"
+		default n
+		help
+			Feature for offline mode charger.
+
+config JRD_RECORD_SLEEP_UP_TIME
+		bool "Record log sleep time"
+		default n
+		help
+			Enable record log in sleep time from JRD.
 endif
