@@ -153,7 +153,7 @@ dhd_customer_gpio_wlan_ctrl(int onoff)
 
 //JRD function.
 /* FIXME:hard code.
- * filename: /system/wlan/broadcom/macaddr
+ * filename: /data/misc/macaddr
  * 	this file will be updated by tool [nvcmd] when boot-up. 
  * 	refer to script [init.rc].
  * string format: [00:12:34:AB:cd:ef]
@@ -243,7 +243,7 @@ static int jrd_get_mac_addr(struct ether_addr *eaddr)
 	loff_t pos;
 	
 	//FIXME:hard code.
-	strcpy(fn, "/system/wlan/broadcom/macaddr");
+	strcpy(fn, "/data/misc/macaddr");
 
 	fp = filp_open(fn, O_RDONLY, 0);
 	if(IS_ERR(fp)){
