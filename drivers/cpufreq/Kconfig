@@ -144,6 +144,12 @@ config CPU_FREQ_DEFAULT_GOV_INTELLIDEMAND
 	select CPU_FREQ_GOV_PERFORMANCE
 	help
 	  Intelligent OnDemand Govneror based on Samsung Patched OnDemand.
+
+config CPU_FREQ_DEFAULT_GOV_SAVAGEDZEN
+	bool "SavagedZen"
+	select CPU_FREQ_GOV_SAVAGEDZEN
+	help
+	  Use the CPUFreq governor 'savagedzen' as default.
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -250,4 +256,11 @@ config CPU_FREQ_GOV_INTELLIDEMAND
 	depends on CPU_FREQ
 	help
 	  'intellidemand' - an intelligent ondemand governor
+
+config CPU_FREQ_GOV_SAVAGEDZEN
+	tristate "'savagedzen' cpufreq governor"
+	depends on CPU_FREQ
+	help
+	   'Savaged-Zen' - a "smartass" based governor
+	   If in doubt, say N.
 endif	# CPU_FREQ
