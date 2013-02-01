@@ -525,7 +525,6 @@ static struct power_supply msm_psy_batt = {
 struct msm_batt_get_volt_ret_data {
 	u32 battery_voltage;
 };
-
 #if 0
 static int msm_batt_get_volt_ret_func(struct msm_rpc_client *batt_client,
 				       void *buf, void *data)
