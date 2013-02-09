@@ -96,7 +96,7 @@
 #define TAOS_TRITON_STATUS_PRXINTR	0x20
     
 // lux constants
-#define	TAOS_MAX_LUX			65535000
+#define	TAOS_MAX_LUX			200000
 #define TAOS_SCALE_MILLILUX		3
 #define TAOS_FILTER_DEPTH		3
 
